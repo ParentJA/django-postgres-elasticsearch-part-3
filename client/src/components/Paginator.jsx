@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Pagination } from 'react-bootstrap';
 
-function Paginator ({ paginatedData, search }) {
+export default function Paginator ({ paginatedData, search }) {
   const { currentPage, totalPages } = getPageData();
 
   function parseUrlSearchParams (urlString) {
@@ -69,5 +69,3 @@ function Paginator ({ paginatedData, search }) {
     </div>
   );
 }
-
-export default Paginator;

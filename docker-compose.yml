@@ -1,14 +1,11 @@
-version: "3.8"
-
 services:
-
   database:
     container_name: perusable-database
     environment:
       - POSTGRES_DB=perusable
       - POSTGRES_USER=perusable
       - POSTGRES_PASSWORD=perusable
-    image: postgres:15.2-alpine
+    image: postgres:16.1
     ports:
       - "5433:5432"
     volumes:
@@ -36,12 +33,12 @@ services:
   client:
     build:
       context: ./client
-    command: [ "yarn", "start" ]
+    command: [ "yarn", "run", "dev" ]
     container_name: perusable-client
     depends_on:
       - server
     ports:
-      - 3000:3000
+      - 5173:5173
     volumes:
       - ./client:/usr/src/app
 

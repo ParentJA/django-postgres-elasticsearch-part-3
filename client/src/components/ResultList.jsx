@@ -2,7 +2,7 @@ import React from 'react';
 
 import ResultListItem from './ResultListItem';
 
-function ResultList ({ results }) {
+export default function ResultList ({ results }) {
   if (!results) {
     return <p>Search using the left panel.</p>;
   }
@@ -19,5 +19,3 @@ function ResultList ({ results }) {
     </div>
   );
 }
-
-export default ResultList;

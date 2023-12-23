@@ -28,21 +28,21 @@ class ViewTests(APITestCase):
         response = self.client.get('/api/v1/catalog/wines/', {
             'query': 'Cabernet',
         })
-        self.assertEquals(1, len(response.data))
-        self.assertEquals("58ba903f-85ff-45c2-9bac-6d0732544841", response.data[0]['id'])
+        self.assertEqual(1, len(response.data))
+        self.assertEqual("58ba903f-85ff-45c2-9bac-6d0732544841", response.data[0]['id'])
 
     def test_query_matches_winery(self):
         response = self.client.get('/api/v1/catalog/wines/', {
-            'query': 'Barnard'
+            'query': 'Barnard',
         })
-        self.assertEquals(1, len(response.data))
-        self.assertEquals("21e40285-cec8-417c-9a26-4f6748b7fa3a", response.data[0]['id'])
+        self.assertEqual(1, len(response.data))
+        self.assertEqual("21e40285-cec8-417c-9a26-4f6748b7fa3a", response.data[0]['id'])
 
     def test_query_matches_description(self):
         response = self.client.get('/api/v1/catalog/wines/', {
             'query': 'wine',
         })
-        self.assertEquals(4, len(response.data))
+        self.assertEqual(4, len(response.data))
         self.assertCountEqual([
             "58ba903f-85ff-45c2-9bac-6d0732544841",
             "21e40285-cec8-417c-9a26-4f6748b7fa3a",
@@ -54,7 +54,7 @@ class ViewTests(APITestCase):
         response = self.client.get('/api/v1/catalog/wines/', {
             'country': 'France',
         })
-        self.assertEquals(2, len(response.data))
+        self.assertEqual(2, len(response.data))
         self.assertCountEqual([
             "0082f217-3300-405b-abc6-3adcbecffd67",
             "000bbdff-30fc-4897-81c1-7947e11e6d1a",
@@ -64,14 +64,14 @@ class ViewTests(APITestCase):
         response = self.client.get('/api/v1/catalog/wines/', {
             'points': 87,
         })
-        self.assertEquals(1, len(response.data))
-        self.assertEquals("21e40285-cec8-417c-9a26-4f6748b7fa3a", response.data[0]['id'])
+        self.assertEqual(1, len(response.data))
+        self.assertEqual("21e40285-cec8-417c-9a26-4f6748b7fa3a", response.data[0]['id'])
 
     def test_country_must_be_exact_match(self):
         response = self.client.get('/api/v1/catalog/wines/', {
             'country': 'Frances',
         })
-        self.assertEquals(0, len(response.data))
+        self.assertEqual(0, len(response.data))
         self.assertJSONEqual(response.content, [])
 
     def test_search_can_be_paginated(self):
@@ -81,7 +81,7 @@ class ViewTests(APITestCase):
         })
         # Count is equal to total number of results in database
         # We're loading 4 wines into the database via fixtures
-        self.assertEqual(4, response.data['count'])
+        self.assertEqual(4, response.data['count']) # changed
         self.assertEqual(1, len(response.data['results']))
         self.assertIsNotNone(response.data['previous'])
         self.assertIsNotNone(response.data['next'])
@@ -90,7 +90,7 @@ class ViewTests(APITestCase):
         response = self.client.get('/api/v1/catalog/wines/', {
             'query': 'Chardonnay',
         })
-        self.assertEquals(2, len(response.data))
+        self.assertEqual(2, len(response.data))
         self.assertListEqual([
             "0082f217-3300-405b-abc6-3adcbecffd67",
             "000bbdff-30fc-4897-81c1-7947e11e6d1a",
@@ -111,7 +111,7 @@ class ViewTests(APITestCase):
         response = self.client.get('/api/v1/catalog/wines/', {
             'query': 'wine',
         })
-        self.assertEquals('A creamy <mark>wine</mark> with full Chardonnay flavors.', response.data[0]['description'])
+        self.assertEqual('A creamy <mark>wine</mark> with full Chardonnay flavors.', response.data[0]['description'])
 
     def test_wine_search_words_populated_on_save(self):
         WineSearchWord.objects.all().delete()
@@ -141,6 +141,8 @@ class ViewTests(APITestCase):
             WineSearchWord(word='noir'),
             WineSearchWord(word='merlot'),
         ])
-        response = self.client.get('/api/v1/catalog/wine-search-words/?query=greegio')
+        response = self.client.get('/api/v1/catalog/wine-search-words/', {
+            'query': 'greegio',
+        })
         self.assertEqual(1, len(response.data))
         self.assertEqual('grigio', response.data[0]['word'])

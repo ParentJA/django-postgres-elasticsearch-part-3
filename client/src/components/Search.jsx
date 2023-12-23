@@ -5,7 +5,7 @@ import { Formik } from 'formik';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 
-function Search ({ search }) {
+export default function Search ({ search }) {
   const [isLoading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
@@ -56,46 +56,46 @@ function Search ({ search }) {
         handleChange,
         handleSubmit,
         setFieldValue,
-        values,
+        values
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Form.Group controlId="country">
-          <Form.Label>Country</Form.Label>
-          <Col>
-            <Form.Control
-              type="text"
-              name="country"
-              placeholder="Enter a country (e.g. US)"
-              value={values.country}
-              onChange={handleChange}
-            />
-            <Form.Text className="text-muted">
-              Filters search results by country.
-            </Form.Text>
-          </Col>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label htmlFor="points">Points</Form.Label>
-          <Col>
-            <Form.Control
-              id="points"
-              type="number"
-              min="1"
-              max="100"
-              name="points"
-              placeholder="Enter points (e.g. 92)"
-              value={values.points}
-              onChange={handleChange}
-            />
-            <Form.Text className="text-muted">
-              Filters search results by points.
-            </Form.Text>
-          </Col>
-        </Form.Group>
+            <Form.Label>Country</Form.Label>
+            <Col>
+              <Form.Control
+                type="text"
+                name="country"
+                placeholder="Enter a country (e.g. US)"
+                value={values.country}
+                onChange={handleChange}
+              />
+              <Form.Text className="text-muted">
+                Filters search results by country.
+              </Form.Text>
+            </Col>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label htmlFor="points">Points</Form.Label>
+            <Col>
+              <Form.Control
+                id="points"
+                type="number"
+                min="1"
+                max="100"
+                name="points"
+                placeholder="Enter points (e.g. 92)"
+                value={values.points}
+                onChange={handleChange}
+              />
+              <Form.Text className="text-muted">
+                Filters search results by points.
+              </Form.Text>
+            </Col>
+          </Form.Group>
           <Form.Group controlId='query'>
             <Form.Label>Query</Form.Label>
             <Col>
-            <AsyncTypeahead
+              <AsyncTypeahead
                 filterBy={() => true}
                 id="query"
                 isLoading={isLoading}
@@ -127,5 +127,3 @@ function Search ({ search }) {
     </Formik>
   );
 }
-
-export default Search;

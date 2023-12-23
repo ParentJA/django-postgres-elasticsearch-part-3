@@ -62,7 +62,14 @@ class Wine(models.Model):
 
     def __str__(self):
         return f'{self.id}'
+    
 
+class WineSearchWord(models.Model):
+    word = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.word
+    
 
 class WineSearchWordQuerySet(models.query.QuerySet):
     def search(self, query):
@@ -74,7 +81,7 @@ class WineSearchWordQuerySet(models.query.QuerySet):
 class WineSearchWord(models.Model):
     word = models.CharField(max_length=255, unique=True)
 
-    objects = WineSearchWordQuerySet.as_manager() # new
+    objects = WineSearchWordQuerySet.as_manager()
 
     def __str__(self):
         return self.word

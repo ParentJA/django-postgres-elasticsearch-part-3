@@ -17,11 +17,18 @@ def on_wine_save(sender, instance, *args, **kwargs):
     with connection.cursor() as cursor:
         cursor.execute("""
             INSERT INTO catalog_winesearchword (word)
-            SELECT word FROM ts_stat('
-              SELECT to_tsvector(''simple'', winery) ||
-                     to_tsvector(''simple'', coalesce(description, ''''))
-                FROM catalog_wine
-               WHERE id = '%s'
-            ')
-            ON CONFLICT (word) DO NOTHING;
+            SELECT 
+              word 
+            FROM 
+              ts_stat('
+                SELECT 
+                  to_tsvector('' simple '', winery) || to_tsvector(
+                    '' simple '', 
+                    coalesce(description, '''')
+                  ) 
+                FROM 
+                  catalog_wine 
+                WHERE 
+                  id = '%s'
+              ') ON CONFLICT (word) DO NOTHING;
         """, [str(instance.id),])

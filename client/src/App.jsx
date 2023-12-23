@@ -9,7 +9,7 @@ import Paginator from './components/Paginator';
 import ResultList from './components/ResultList';
 import Search from './components/Search';
 
-function App () {
+export default function App () {
   const [paginatedData, setPaginatedData] = useState([]);
 
   const search = async (params) => {
@@ -45,5 +45,3 @@ function App () {
     </Container>
   );
 }
-
-export default App;
